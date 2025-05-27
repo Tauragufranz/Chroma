@@ -1,3 +1,29 @@
+<?php
+include "koneksi.php";
+
+$id = $_GET['id'];
+$sql = mysqli_query($koneksi, "SELECT * FROM tb_ktg WHERE id_ktg = '$id'");
+$data = mysqli_fetch_array($sql);
+
+// Cek apakah data ditemukan
+if (!$data) {
+    echo "<script>alert('Data tidak ditemukan!'); window.location.href = 'kategori.php';</script>";
+    exit;
+}
+
+if (isset($_POST['simpan'])) {
+    $nm_ktg = $_POST['nm_ktg'];
+
+    $query = mysqli_query($koneksi, "UPDATE tb_ktg SET nm_ktg = '$nm_ktg' WHERE id_ktg = '$id'");
+
+    if ($query) {
+        echo "<script>alert('Data berhasil diubah!'); window.location.href = 'kategori.php';</script>";
+    } else {
+        echo "<script>alert('Data gagal diubah!'); window.location.href = 'kategori.php';</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +31,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Tables / General - NiceAdmin Bootstrap Template</title>
+    <title>Kategori Produk - Echoes Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -44,43 +70,28 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Chroma</span>
+                <span class="d-none d-lg-block">Echoes</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div><!-- End Search Bar -->
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle " href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li><!-- End Search Icon-->
-
-
-
-
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/shalltear.jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">Tauragufranz</span>
+                        <img src="assets/img/shimarin.jpg" alt="Profile" class="rounded-circle">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Tauragufranz</h6>
+                            <h6>Kukuh Putra</h6>
                             <span>Admin</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
                         </li>
 
                         <li>
@@ -98,14 +109,15 @@
 
     </header><!-- End Header -->
 
+
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="index.php">
-                    <i class="bi-house-door-fill"></i>
+                <a class="nav-link collapsed " href="index.php">
+                    <i class="bi-house-door"></i>
                     <span>Beranda</span>
                 </a>
             </li><!-- End Dashboard Nav -->
@@ -155,56 +167,38 @@
         </ul>
 
     </aside><!-- End Sidebar-->
-
-
     <main id="main" class="main">
 
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <a href="t_kategori.php" class="btn btn-primary mt-3">Tambah Data</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <div class="pagetitle">
+            <h1>Kategori Produk</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
+                    <li class="breadcrumb-item">Kategori Produk</li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
         <section class="section">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
 
                     <div class="card">
                         <div class="card-body">
-                          
 
-                            <!-- Table with stripped rows -->
-                            <table class="table table-striped mt-2">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama Kategori</th>
-                                        <th scope="col">aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
-                            <!-- End Table with stripped rows -->
-
-
-
-
+                            <!-- Vertical Form -->
+                            <form class="row g-3 mt-2" method="post">
+                                <div class="col-12">
+                                    <label for="nm_ktg" class="form-label">Nama Kategori Produk</label>
+                                    <input type="text" class="form-control" id="nm_ktg" name="nm_ktg" placeholder="Masukkan Nama Kategori" value="<?php echo htmlspecialchars($data['nm_ktg']); ?>">
+                                    <div class="text-center mt-2">
+                                        <button type="reset" class="btn btn-secondary">Reset</button>
+                                        <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                                    </div>
+                            </form><!-- Vertical Form -->
                         </div>
                     </div>
-
-
-
                 </div>
-            </div>
-
-            </div>
             </div>
         </section>
 
@@ -213,14 +207,14 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Chroma</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Echoes</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://instagram.com/tashagiri_ken" target="_blank">TauraGufranz</a>
+            Designed by <a href="https://www.instagram.com/ku_kuh11?igsh=OXo1MGNkdWI2YnB4" target="_blank">Kukuh Putra</a>
         </div>
     </footer><!-- End Footer -->
 

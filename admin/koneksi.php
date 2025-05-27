@@ -1,3 +1,3 @@
 <?php
-$koneksi = mysqli_connect("localhost","root","","chroma");
+$koneksi = mysqli_connect("localhost","root","","Chroma");
 ?>
