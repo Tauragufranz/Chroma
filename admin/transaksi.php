@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Echoes Admin</title>
+    <title>Transaksi - Chroma Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -104,13 +104,13 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="index.php">
-                    <i class="bi-house-door"></i>
+                    <i class="bi-house-door-fill"></i>
                     <span>Beranda</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link" href="kategori.php">
+                <a class="nav-link collapsed" href="kategori.php">
                     <i class="bi-grid"></i>
                     <span>Kategori Produk</span>
                 </a>
@@ -131,7 +131,7 @@
             </li><!-- End Keranjang Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="transaksi.php">
+                <a class="nav-link" href="transaksi.php">
                     <i class="bi bi-cash"></i>
                     <span>Transaksi</span>
                 </a>
@@ -157,11 +157,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Kategori Produk</h1>
+            <h1>transaksi</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item active">Kategori Produk</li>
+                    <li class="breadcrumb-item active">transaksi</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->

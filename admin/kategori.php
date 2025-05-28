@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Tables / General - NiceAdmin Bootstrap Template</title>
+    <title>Produk - Chroma Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -28,14 +28,6 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -44,7 +36,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
                 <span class="d-none d-lg-block">Chroma</span>
             </a>
@@ -53,7 +45,7 @@
 
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo isset($_get ['query']) ? htmlspecialchars ($_GET) ['query'] : ''; ?>">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->
@@ -67,20 +59,23 @@
                     </a>
                 </li><!-- End Search Icon-->
 
-
-
-
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="assets/img/shalltear.jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">Tauragufranz</span>
+                        <!-- profile-img.jpg diganti dengan foto kalian -->
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Tauragufranz</h6>
+                            <h6>TauraGufranz</h6>
                             <span>Admin</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
                         </li>
 
                         <li>
@@ -99,72 +94,82 @@
     </header><!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" class="sidebar">
 
-        <ul class="sidebar-nav" id="sidebar-nav">
+    <ul class="sidebar-nav" id="sidebar-nav">
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="index.php">
-                    <i class="bi-house-door-fill"></i>
-                    <span>Beranda</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.php">
+          <i class="bi-house-door-fill"></i>
+          <span>Beranda</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link" href="kategori.php">
-                    <i class="bi-grid"></i>
-                    <span>Kategori Produk</span>
-                </a>
-            </li><!-- End Kategori Produk Nav -->
+      <li class="nav-item">
+        <a class="nav-link" href="kategori.php">
+          <i class="bi-grid"></i>
+          <span>Kategori Produk</span>
+        </a>
+      </li><!-- End Kategori Produk Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="produk.php">
-                    <i class="bi-box"></i>
-                    <span>Produk</span>
-                </a>
-            </li><!-- End Produk Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="produk.php">
+          <i class="bi-box"></i>
+          <span>Produk</span>
+        </a>
+      </li><!-- End Produk Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="keranjang.php">
-                    <i class="bi bi-cart4"></i>
-                    <span>Keranjang</span>
-                </a>
-            </li><!-- End Keranjang Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="keranjang.php">
+        <i class="bi bi-cart4"></i>
+          <span>Keranjang</span>
+        </a>
+      </li><!-- End Keranjang Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="transaksi.php">
-                    <i class="bi bi-cash"></i>
-                    <span>Transaksi</span>
-                </a>
-            </li><!-- End Transakai Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="transaksi.php">
+          <i class="bi bi-cash"></i>
+          <span>Transaksi</span>
+        </a>
+      </li><!-- End Transakai Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="laporan.php">
-                    <i class="bi-bar-chart"></i>
-                    <span>Laporan</span>
-                </a>
-            </li><!-- End Laporan Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="laporan.php">
+          <i class="bi-bar-chart"></i>
+          <span>Laporan</span>
+        </a>
+      </li><!-- End Laporan Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pengguna.php">
-                    <i class="bi-person"></i>
-                    <span>Pengguna</span>
-                </a>
-            </li><!-- End Pengguna Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pengguna.php">
+          <i class="bi-person"></i>
+          <span>Pengguna</span>
+        </a>
+      </li><!-- End Pengguna Nav -->
 
-        </ul>
+    </ul>
 
-    </aside><!-- End Sidebar-->
-
+  </aside><!-- End Sidebar-->
 
     <main id="main" class="main">
 
+        <div class="pagetitle">
+            <h1>Kategori Produk</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
+                    <li class="breadcrumb-item active">Kategori Produk</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
                     <div class="card-body">
-                        <a href="t_kategori.php" class="btn btn-primary mt-3">Tambah Data</a>
+                        <a href="t_produk.php" class="btn btn-primary mt-3">
+                            <i class="bi bi-plus-lg"></i> Tambah Data
+                        </a>
                     </div>
                 </div>
             </div>
@@ -172,39 +177,78 @@
 
         <section class="section">
             <div class="row">
+
                 <div class="col-lg-12">
 
                     <div class="card">
                         <div class="card-body">
-                          
 
                             <!-- Table with stripped rows -->
                             <table class="table table-striped mt-2">
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
+                                        <th scope="col">Nama Produk</th>
+                                        <th scope="col">Harga</th>
+                                        <th scope="col">Stok</th>
                                         <th scope="col">Nama Kategori</th>
-                                        <th scope="col">aksi</th>
+                                        <th scope="col">Gambar</th>
+                                        <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+<?php
+include "koneksi.php";
+$no = 1;
+$query = isset($_GET['query']) ? mysqli_real_escape_string ($koneksi, $_GET ['query']) : ''; 
+
+$sql_query = "SELECT tb_produk.*, tb_ktg.nm_ktg FROM tb_produk LEFT JOIN tb_ktg ON tb_produk.id_ktg = tb_ktg.id_ktg";
+if (!empty($query)) {
+    $sql_query .= " WHERE tb_produk.nm_produk LIKE '%$query%' OR tb_ktg.nm_ktg LIKE '%$query%' OR tb_produk.ket LIKE '%$query%'";
+}
+$sql = mysqli_query($koneksi, $sql_query);
+if (mysqli_num_rows($sql)> 0) {
+    while ($hasil = mysqli_fetch_array($sql)) {
+        ?>
+        <tr>
+        <td><php echo $no++; ?></td>
+        <td><?php echo $hasil['nm_produk']; ?></td>
+        <td>Rp <?php echo number_format($hasil['harga'],0,',','.'); ?></td>
+        <td><?php echo $hasil['stok']; ?></td>
+        <td><?php echo $hasil['ket']; ?></td>
+        <td><?php echo $hasil['nm_ktg']; ?></td>
+        <td>
+        <?php if (!empty($hasil['gambar'])) { ?>
+            <img src="produk_img/<?php echo $hasil ['gambar']; ?>" width="100"><?php} else { ?> tidak ada gambar <?php } ?>
+            </td>
+            </td><?php echo $hasil ['size']; ?></td>
+            <td>
+            <a href="e_produk.php?id=<?php echo $hasil['id_produk']; ?>" class="btn btn-warning">
+            <i class= "bi bi-pencil-square"></i>
+            </a>
+            <a href= "h_produk.php/id=<?php echo $hasil['id_produk']; ?>" class="btn btn-danger" onclick="return confirm('apakah anda yakin ingin menghapus data?')">
+            <i class="bi bi-trash"></i>
+            </a>
+            </td>
+            </tr>
+            <?php
+        }
+        } else {
+         ?>
+        <tr>
+        <td colspan="9" class= "text-center">belum ada data</td>
+        </tr>
+        <?php
+        }
+        ?>
+
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
 
-
-
-
                         </div>
                     </div>
-
-
-
                 </div>
-            </div>
-
-            </div>
             </div>
         </section>
 
@@ -213,14 +257,10 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Chroma</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Nama Website</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://instagram.com/tashagiri_ken" target="_blank">TauraGufranz</a>
+            Designed by <a href="https://instagram.com/namaig/">Nama Anda</a>
         </div>
     </footer><!-- End Footer -->
 
