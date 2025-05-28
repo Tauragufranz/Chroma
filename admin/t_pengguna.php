@@ -9,7 +9,7 @@ if (!isset($_SESSION["login"])) {
 }
 
 // Cek apakah status tersedia dan pastikan user adalah admin
-if (!isset($_SESSION["sts"]) || $_SESSION["sts"] !== "admin") {
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
     echo "<script>
     alert('Akses ditolak! Halaman ini hanya untuk Admin.');
     window.location.href='login.php';
@@ -24,7 +24,7 @@ if (isset($_POST['simpan'])) {
     $code = $hasil['max_code'];
 
     // Menghasilkan ID baru dengan format U001, U002, dst.
-    $urutan = (int)substr($code, 1, 3); 
+    $urutan = (int)substr($code, 1, 3);
     $urutan++;
     $huruf = "U";
     $id_user = $huruf . sprintf("%03s", $urutan);
@@ -32,11 +32,11 @@ if (isset($_POST['simpan'])) {
     // Ambil input dari form
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
-    $sts = $_POST['sts'];
+    $status = $_POST['status'];
 
     // Query untuk insert data ke tb_user
-    $query = mysqli_query($koneksi, "INSERT INTO tb_user (id_user, username, password, sts) 
-                                     VALUES ('$id_user', '$username', '$password', '$sts')");
+    $query = mysqli_query($koneksi, "INSERT INTO tb_user (id_user, username, password, status) 
+                                     VALUES ('$id_user', '$username', '$password', '$status')");
 
     // Notifikasi
     if ($query) {
@@ -56,7 +56,7 @@ if (isset($_POST['simpan'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pengguna - Echoes Admin</title>
+    <title>Pengguna - Chroma Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -89,7 +89,7 @@ if (isset($_POST['simpan'])) {
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Echoes</span>
+                <span class="d-none d-lg-block">Chroma</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -212,8 +212,8 @@ if (isset($_POST['simpan'])) {
 
                                 <!-- Status -->
                                 <div class="col-12">
-                                    <label for="sts" class="form-label">Status</label>
-                                    <select class="form-select" id="sts" name="sts" required>
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-select" id="status" name="status" required>
                                         <option value="">Pilih Status</option>
                                         <option value="admin">Admin</option>
                                         <option value="customer">Customer</option>
@@ -238,10 +238,10 @@ if (isset($_POST['simpan'])) {
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Echoes</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Chroma</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://instagram.com/ku_kuh11?igsh=OXo1MGNkdWI2YnB4" target="_blank">Kukuh Putra</a>
+            Designed by <a href="https://instagram.com/tashagiri_ken" target="_blank">TauraGufranz</a>
         </div>
     </footer><!-- End Footer -->
 

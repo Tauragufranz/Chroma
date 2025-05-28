@@ -1,7 +1,23 @@
 <?php
+session_start();
 include "koneksi.php";
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+    echo "<script>
+    alert('Akses ditolak! Halaman ini hanya untuk Admin.');
+    window.location.href='login.php';
+  </script>";
+    exit;
+}
 if (isset($_POST['simpan'])) {
-    $auto = mysqli_query($koneksi, "select max(id_ktg) as max_code From tb_ktg");
+    $auto = mysqli_query($koneksi, "select max(id_kategori) as max_code from tb_kategori");
     $hasil = mysqli_fetch_array($auto);
     $code = $hasil['max_code'];
     $urutan = (int)substr($code, 1, 3);
@@ -10,15 +26,16 @@ if (isset($_POST['simpan'])) {
     $id_kategori = $huruf . sprintf("%03s", $urutan);
     $nm_kategori = $_POST['nm_kategori'];
 
-    $query = mysqli_query($koneksi, "INSERT INTO tb_ktg(id_ktg, nm_ktg) VALUES ('$id_kategori', '$nm_kategori')");
+    $query = mysqli_query($koneksi, "INSERT INTO tb_kategori(id_kategori, nm_kategori) VALUES ('$id_kategori', '$nm_kategori')");
     if ($query) {
-        echo "<script>alert('Data berhasil ditambahkan !')</script>";
+        echo "<script>alert('Data berhasil ditambahkan!')</script>";
         header("refresh:0, kategori.php");
     } else {
-        echo "<script>alert('Data berhasil ditambahakan!')</script>";
+        echo "<script>alert('Data gagal ditambahkan!')</script>";
         header("refresh:0, kategori.php");
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +44,7 @@ if (isset($_POST['simpan'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Echoes Admin</title>
+    <title>Kategori Produk - Chroma Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -50,14 +67,6 @@ if (isset($_POST['simpan'])) {
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -68,30 +77,27 @@ if (isset($_POST['simpan'])) {
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Echoes</span>
+                <span class="d-none d-lg-block">Furnimart</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
+
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/shimarin.jpg" alt="Profile" class="rounded-circle">
+                        <img src="assets/img/user.jpg" alt="Profile" class="rounded-circle">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Kukuh Putra</h6>
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
                             <span>Admin</span>
                         </li>
                         <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -105,7 +111,6 @@ if (isset($_POST['simpan'])) {
 
     </header><!-- End Header -->
 
-
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
 
@@ -113,57 +118,55 @@ if (isset($_POST['simpan'])) {
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="index.php">
-                    <i class="fa-house-chimney"></i>
+                    <i class="bi bi-house-door"></i>
                     <span>Beranda</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li><!-- End Beranda Nav -->
 
             <li class="nav-item">
-                <a class="nav-link
-                " href="kategori.php">
-                    <i class="bi-grid"></i>
+                <a class="nav-link" href="kategori.php">
+                    <i class="bi bi-tags"></i>
                     <span>Kategori Produk</span>
                 </a>
-            </li><!-- End Kategori Produk Nav -->
+            </li><!-- End Kategori Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="produk.php">
-                    <i class="bi-box"></i>
+                    <i class="bi bi-shop"></i>
                     <span>Produk</span>
                 </a>
-            </li><!-- End Produk Nav -->
+            </li><!-- End Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="keranjang.php">
-                    <i class="bi bi-cart4"></i>
+                    <i class="bi bi-cart"></i>
                     <span>Keranjang</span>
                 </a>
-            </li><!-- End Keranjang Nav -->
+            </li><!-- End Keranjang Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="transaksi.php">
-                    <i class="bi bi-cash"></i>
+                    <i class="bi bi-receipt"></i>
                     <span>Transaksi</span>
                 </a>
-            </li><!-- End Transakai Nav -->
+            </li><!-- End Transaksi Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="laporan.php">
-                    <i class="bi-bar-chart"></i>
+                    <i class="bi bi-file-earmark-bar-graph"></i>
                     <span>Laporan</span>
                 </a>
-            </li><!-- End Laporan Nav -->
-
+            </li><!-- End Laporan Page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pengguna.php">
-                    <i class="bi-person"></i>
+                    <i class="bi bi-people"></i>
                     <span>Pengguna</span>
                 </a>
-            </li><!-- End Pengguna Nav -->
-
+            </li><!-- End Pengguna Page Nav -->
         </ul>
 
     </aside><!-- End Sidebar-->
+
     <main id="main" class="main">
 
         <div class="pagetitle">
@@ -176,23 +179,23 @@ if (isset($_POST['simpan'])) {
                 </ol>
             </nav>
         </div><!-- End Page Title -->
+
         <section class="section">
             <div class="row">
                 <div class="col-lg-6">
-
                     <div class="card">
                         <div class="card-body">
-
-                            <!-- Vertical Form -->
                             <form class="row g-3 mt-2" method="post">
                                 <div class="col-12">
-                                    <label for="nm_kategori" class="form-label">Nama Kategori Produk</label>
-                                    <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="Masukkan Nama Kategori">
-                                    <div class="text-center mt-2">
-                                        <button type="reset" class="btn btn-secondary">Reset</button>
-                                        <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
-                                    </div>
-                            </form><!-- Vertical Form -->
+                                    <label for="nm_kategori" class="form-label">Nama Kategori</label>
+                                    <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="Masukkan Nama Kategori Produk">
+                                </div>
+                                <div class="text-center">
+                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -204,14 +207,10 @@ if (isset($_POST['simpan'])) {
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Echoes</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Chroma</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://www.instagram.com/ku_kuh11?igsh=OXo1MGNkdWI2YnB4" target="_blank">Kukuh Putra</a>
+            Designed by <a href="https://instagram.com/tashagiri_ken" target="_blank">TauraGufranz</a>
         </div>
     </footer><!-- End Footer -->
 

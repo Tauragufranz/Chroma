@@ -15,10 +15,10 @@ if (isset($_POST["login"])) {
         // Cek password
         if (password_verify($password, $row["password"])) {
             // Cek apakah status user adalah admin
-            if ($row["sts"] == "admin") {
+            if ($row["status"] == "admin") {
                 $_SESSION["login"] = true;
                 $_SESSION["username"] = $row["username"];
-                $_SESSION["sts"] = $row["sts"];
+                $_SESSION["status"] = $row["status"];
                 header("Location: index.php");
                 exit;
             } else {
@@ -79,7 +79,7 @@ if (isset($_POST["login"])) {
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Echoes Admin</span>
+                  <span class="d-none d-lg-block">Chroma Admin</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -115,7 +115,7 @@ if (isset($_POST["login"])) {
               </div>
 
               <div class="credits">
-                Designed by <a href="https://instagram.com/ku_kuh11?igsh=OXo1MGNkdWI2YnB4" target="_blank">Kukuh Putra</a>
+                Designed by <a href="https://instagram.com/tashagiri_ken" target="_blank">TauraGufranz</a>
               </div>
 
             </div>

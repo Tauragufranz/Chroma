@@ -1,3 +1,23 @@
+<?php
+session_start();
+include "koneksi.php";
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+    echo "<script>
+    alert('Akses ditolak! Halaman ini hanya untuk Admin.');
+    window.location.href='login.php';
+  </script>";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +25,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pengguna - Chroma Admin</title>
+    <title>Pengguna- Furnimart Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -28,6 +48,7 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -36,19 +57,20 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.php" class="logo d-flex align-items-center">
+            <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Chroma</span>
+                <span class="d-none d-lg-block">Furnimart</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
         <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo isset($_get ['query']) ? htmlspecialchars ($_GET) ['query'] : ''; ?>">
+            <form class="search-form d-flex align-items-center" method="POST" action="">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?>">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->
+
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -59,33 +81,27 @@
                     </a>
                 </li><!-- End Search Icon-->
 
-                <li class="nav-item dropdown pe-3">
+               <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/shalltear.jpg" alt="Profile" class="rounded-circle">
-                        <!-- profile-img.jpg diganti dengan foto kalian -->
-                    </a><!-- End Profile Iamge Icon -->
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/shalltear.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Tauragufranz</span>
+          </a><!-- End Profile Iamge Icon -->
 
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                        <li class="dropdown-header">
-                            <h6>TauraGufranz</h6>
-                            <span>Admin</span>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Tauragufranz</h6>
+              <span>Admin</span>
+            </li>
+   
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Sign Out</span>
-                            </a>
-                        </li>
-
-                    </ul><!-- End Profile Dropdown Items -->
+          </ul><!-- End Profile Dropdown Items -->
                 </li><!-- End Profile Nav -->
 
             </ul>
@@ -93,64 +109,61 @@
 
     </header><!-- End Header -->
 
-     <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+        <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php">
-          <i class="bi-house-door-fill"></i>
-          <span>Beranda</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="index.php">
+                    <i class="bi bi-house-door-fill"></i>
+                    <span>Beranda</span>
+                </a>
+            </li><!-- End Beranda Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="kategori.php">
-          <i class="bi-grid"></i>
-          <span>Kategori Produk</span>
-        </a>
-      </li><!-- End Kategori Produk Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="kategori.php">
+                    <i class="bi-grid"></i>
+                    <span>Kategori Produk</span>
+                </a>
+            </li><!-- End Kategori Produk Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="produk.php">
-          <i class="bi-box"></i>
-          <span>Produk</span>
-        </a>
-      </li><!-- End Produk Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="produk.php">
+                    <i class="bi bi-box"></i>
+                    <span>Produk</span>
+                </a>
+            </li><!-- End Produk Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="keranjang.php">
-        <i class="bi bi-cart4"></i>
-          <span>Keranjang</span>
-        </a>
-      </li><!-- End Keranjang Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="keranjang.php">
+                    <i class="bi bi-cart4"></i>
+                    <span>Keranjang</span>
+                </a>
+            </li><!-- End Keranjang Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="transaksi.php">
-          <i class="bi bi-cash"></i>
-          <span>Transaksi</span>
-        </a>
-      </li><!-- End Transakai Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="transaksi.php">
+                    <i class="bi bi-cash"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li><!-- End Transaksi Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="laporan.php">
-          <i class="bi-bar-chart"></i>
-          <span>Laporan</span>
-        </a>
-      </li><!-- End Laporan Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="laporan.php">
+                    <i class="bi-bar-chart"></i>
+                    <span>Laporan</span>
+                </a>
+            </li><!-- End Laporan Page Nav -->
+            <li class="nav-item">
+                <a class="nav-link" href="pengguna.php">
+                    <i class="bi-person"></i>
+                    <span>Pengguna</span>
+                </a>
+            </li><!-- End Pengguna Page Nav -->
+        </ul>
 
-      <li class="nav-item">
-        <a class="nav-link" href="pengguna.php">
-          <i class="bi-person"></i>
-          <span>Pengguna</span>
-        </a>
-      </li><!-- End Pengguna Nav -->
-
-    </ul>
-
-  </aside><!-- End Sidebar-->
-
+    </aside><!-- End Sidebar-->
 
     <main id="main" class="main">
 
@@ -168,7 +181,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="t_produk.php" class="btn btn-primary mt-3">
+                        <a href="t_pengguna.php" class="btn btn-primary mt-3">
                             <i class="bi bi-plus-lg"></i> Tambah Data
                         </a>
                     </div>
@@ -178,70 +191,60 @@
 
         <section class="section">
             <div class="row">
-
                 <div class="col-lg-12">
-
                     <div class="card">
                         <div class="card-body">
-
                             <!-- Table with stripped rows -->
                             <table class="table table-striped mt-2">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama Produk</th>
-                                        <th scope="col">Harga</th>
-                                        <th scope="col">Stok</th>
-                                        <th scope="col">Nama Kategori</th>
-                                        <th scope="col">Gambar</th>
-                                        <th scope="col">Aksi</th>
+                                        <th>No</th>
+                                        <th>Username</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-<?php
-include "koneksi.php";
-$no = 1;
-$query = isset($_GET['query']) ? mysqli_real_escape_string ($koneksi, $_GET ['query']) : ''; 
+                                    <?php
+                                    include "koneksi.php";
+                                    $no = 1;
 
-$sql_query = "SELECT tb_produk.*, tb_ktg.nm_ktg FROM tb_produk LEFT JOIN tb_ktg ON tb_produk.id_ktg = tb_ktg.id_ktg";
-if (!empty($query)) {
-    $sql_query .= " WHERE tb_produk.nm_produk LIKE '%$query%' OR tb_ktg.nm_ktg LIKE '%$query%' OR tb_produk.ket LIKE '%$query%'";
-}
-$sql = mysqli_query($koneksi, $sql_query);
-if (mysqli_num_rows($sql)> 0) {
-    while ($hasil = mysqli_fetch_array($sql)) {
-        ?>
-        <tr>
-        <td><php echo $no++; ?></td>
-        <td><?php echo $hasil['nm_produk']; ?></td>
-        <td>Rp <?php echo number_format($hasil['harga'],0,',','.'); ?></td>
-        <td><?php echo $hasil['stok']; ?></td>
-        <td><?php echo $hasil['ket']; ?></td>
-        <td><?php echo $hasil['nm_ktg']; ?></td>
-        <td>
-        <?php if (!empty($hasil['gambar'])) { ?>
-            <img src="produk_img/<?php echo $hasil ['gambar']; ?>" width="100"><?php} else { ?> tidak ada gambar <?php } ?>
-            </td>
-            </td><?php echo $hasil ['size']; ?></td>
-            <td>
-            <a href="e_produk.php?id=<?php echo $hasil['id_produk']; ?>" class="btn btn-warning">
-            <i class= "bi bi-pencil-square"></i>
-            </a>
-            <a href= "h_produk.php/id=<?php echo $hasil['id_produk']; ?>" class="btn btn-danger" onclick="return confirm('apakah anda yakin ingin menghapus data?')">
-            <i class="bi bi-trash"></i>
-            </a>
-            </td>
-            </tr>
-            <?php
-        }
-        } else {
-         ?>
-        <tr>
-        <td colspan="9" class= "text-center">belum ada data</td>
-        </tr>
-        <?php
-        }
-        ?>
+                                    // Cek apakah ada input pencarian
+                                    $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
+
+                                    // Query dasar
+                                    $sql_query = "SELECT id_user, username, status FROM tb_user";
+
+                                    // Tambahkan pencarian jika input tidak kosong
+                                    if (!empty($query)) {
+                                        $sql_query .= " WHERE username LIKE '%$query%'";
+                                    }
+
+                                    $sql = mysqli_query($koneksi, $sql_query);
+
+                                    if (mysqli_num_rows($sql) > 0) {
+                                        while ($hasil = mysqli_fetch_array($sql)) {
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $hasil['username']; ?></td>
+                                                <td><?php echo $hasil['status']; ?></td>
+                                                <td>
+                                                    <a href="h_pengguna.php?id=<?php echo $hasil['id_user']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <tr>
+                                            <td colspan="4" class="text-center">Data tidak ditemukan</td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
 
                                 </tbody>
                             </table>
@@ -249,6 +252,7 @@ if (mysqli_num_rows($sql)> 0) {
 
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -258,10 +262,10 @@ if (mysqli_num_rows($sql)> 0) {
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Nama Website</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span></span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://instagram.com/namaig/">Nama Anda</a>
+            Designed by <a href="https://instagram.com/dea.salsa.503/" target="_blank">TauraGufranz</a>
         </div>
     </footer><!-- End Footer -->
 
