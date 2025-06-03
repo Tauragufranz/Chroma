@@ -17,16 +17,16 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
     exit;
 }
 if (isset($_POST['simpan'])) {
-    $auto = mysqli_query($koneksi, "select max(id_kategori) as max_code from tb_kategori");
+    $auto = mysqli_query($koneksi, "select max(id_ktg) as max_code from tb_ktg");
     $hasil = mysqli_fetch_array($auto);
     $code = $hasil['max_code'];
     $urutan = (int)substr($code, 1, 3);
     $urutan++;
     $huruf = "K";
     $id_kategori = $huruf . sprintf("%03s", $urutan);
-    $nm_kategori = $_POST['nm_kategori'];
+    $nm_kategori = $_POST['nm_ktg'];
 
-    $query = mysqli_query($koneksi, "INSERT INTO tb_kategori(id_kategori, nm_kategori) VALUES ('$id_kategori', '$nm_kategori')");
+    $query = mysqli_query($koneksi, "INSERT INTO tb_ktg(id_ktg, nm_ktg) VALUES ('$id_kategori', '$nm_kategori')");
     if ($query) {
         echo "<script>alert('Data berhasil ditambahkan!')</script>";
         header("refresh:0, kategori.php");
@@ -77,7 +77,7 @@ if (isset($_POST['simpan'])) {
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Furnimart</span>
+                <span class="d-none d-lg-block">Chroma</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -115,51 +115,50 @@ if (isset($_POST['simpan'])) {
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="index.php">
-                    <i class="bi bi-house-door"></i>
+                    <i class="bi bi-house-door-fill"></i>
                     <span>Beranda</span>
                 </a>
             </li><!-- End Beranda Nav -->
 
             <li class="nav-item">
                 <a class="nav-link" href="kategori.php">
-                    <i class="bi bi-tags"></i>
+                    <i class="bi-grid"></i>
                     <span>Kategori Produk</span>
                 </a>
             </li><!-- End Kategori Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="produk.php">
-                    <i class="bi bi-shop"></i>
+                    <i class="bi bi-box"></i>
                     <span>Produk</span>
                 </a>
             </li><!-- End Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="keranjang.php">
-                    <i class="bi bi-cart"></i>
+                    <i class="bi bi-cart4"></i>
                     <span>Keranjang</span>
                 </a>
             </li><!-- End Keranjang Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="transaksi.php">
-                    <i class="bi bi-receipt"></i>
+                    <i class="bi bi-cash"></i>
                     <span>Transaksi</span>
                 </a>
             </li><!-- End Transaksi Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="laporan.php">
-                    <i class="bi bi-file-earmark-bar-graph"></i>
+                    <i class="bi bi-chart"></i>
                     <span>Laporan</span>
                 </a>
             </li><!-- End Laporan Page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pengguna.php">
-                    <i class="bi bi-people"></i>
+                    <i class="bi-person"></i>
                     <span>Pengguna</span>
                 </a>
             </li><!-- End Pengguna Page Nav -->
@@ -188,7 +187,7 @@ if (isset($_POST['simpan'])) {
                             <form class="row g-3 mt-2" method="post">
                                 <div class="col-12">
                                     <label for="nm_kategori" class="form-label">Nama Kategori</label>
-                                    <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="Masukkan Nama Kategori Produk">
+                                    <input type="text" class="form-control" id="nm_ktg" name="nm_ktg" placeholder="Masukkan Nama Kategori Produk">
                                 </div>
                                 <div class="text-center">
                                     <button type="reset" class="btn btn-secondary">Reset</button>

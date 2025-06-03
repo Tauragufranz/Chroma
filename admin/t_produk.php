@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "koneksi.php";
 
 // Cek apakah sudah login
@@ -8,7 +9,7 @@ if (!isset($_SESSION["login"])) {
 }
 
 // Cek apakah status tersedia dan pastikan user adalah admin
-if (!isset($_SESSION["sts"]) || $_SESSION["sts"] !== "admin") {
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
     echo "<script>
     alert('Akses ditolak! Halaman ini hanya untuk Admin.');
     window.location.href='login.php';
@@ -29,8 +30,8 @@ if (isset($_POST['simpan'])) {
     $nm_produk = $_POST['nm_produk'];
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
-    $ket = $_POST['ket'];
-    $id_ktg = $_POST['id_ktg'];
+    $desk = $_POST['desk'];
+    $id_kategori = $_POST['id_kategori'];
 
     // Upload Gambar
     $imgfile = $_FILES['gambar']['name'];
@@ -48,8 +49,8 @@ if (isset($_POST['simpan'])) {
         move_uploaded_file($tmp_file, $dir . $imgnewfile);
 
         // Simpan data ke database
-        $query = mysqli_query($koneksi, "INSERT INTO tb_produk (id_produk, nm_produk, harga, stok, ket, id_ktg, gambar) 
-                                         VALUES ('$id_produk', '$nm_produk', '$harga', '$stok', '$ket', '$id_ktg', '$imgnewfile')");
+        $query = mysqli_query($koneksi, "INSERT INTO tb_produk (id_produk, nm_produk, harga, stok, desk, id_kategori, gambar) 
+                                         VALUES ('$id_produk', '$nm_produk', '$harga', '$stok', '$desk', '$id_kategori', '$imgnewfile')");
 
         if ($query) {
             echo "<script>alert('Produk berhasil ditambahkan!');</script>";
@@ -69,7 +70,7 @@ if (isset($_POST['simpan'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Produk - Echoes Admin</title>
+    <title>Produk - Chroma Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -102,7 +103,7 @@ if (isset($_POST['simpan'])) {
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Echoes</span>
+                <span class="d-none d-lg-block">Chroma</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -141,52 +142,54 @@ if (isset($_POST['simpan'])) {
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="index.php">
-                    <i class="bi bi-house-door"></i>
-                    <span>Beranda</span>
-                </a>
-            </li><!-- End Beranda Nav -->
+        <a class="nav-link collapsed" href="index.php">
+          <i class="bi-house-door-fill"></i>
+          <span>Beranda</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="kategori.php">
-                    <i class="bi bi-tags"></i>
-                    <span>Kategori Produk</span>
-                </a>
-            </li><!-- End Kategori Produk Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="kategori.php">
+          <i class="bi-grid"></i>
+          <span>Kategori Produk</span>
+        </a>
+      </li><!-- End Kategori Produk Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link" href="produk.php">
-                    <i class="bi bi-shop"></i>
-                    <span>Produk</span>
-                </a>
-            </li><!-- End Produk Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link" href="produk.php">
+          <i class="bi-box"></i>
+          <span>Produk</span>
+        </a>
+      </li><!-- End Produk Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="keranjang.php">
-                    <i class="bi bi-cart"></i>
-                    <span>Keranjang</span>
-                </a>
-            </li><!-- End Keranjang Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="keranjang.php">
+        <i class="bi bi-cart4"></i>
+          <span>Keranjang</span>
+        </a>
+      </li><!-- End Keranjang Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="transaksi.php">
-                    <i class="bi bi-receipt"></i>
-                    <span>Transaksi</span>
-                </a>
-            </li><!-- End Transaksi Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="transaksi.php">
+          <i class="bi bi-cash"></i>
+          <span>Transaksi</span>
+        </a>
+      </li><!-- End Transakai Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="laporan.php">
-                    <i class="bi bi-file-earmark-bar-graph"></i>
-                    <span>Laporan</span>
-                </a>
-            </li><!-- End Laporan Page Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pengguna.php">
-                    <i class="bi bi-people"></i>
-                    <span>Pengguna</span>
-                </a>
-            </li><!-- End Pengguna Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="laporan.php">
+          <i class="bi-bar-chart"></i>
+          <span>Laporan</span>
+        </a>
+      </li><!-- End Laporan Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pengguna.php">
+          <i class="bi-person"></i>
+          <span>Pengguna</span>
+        </a>
+      </li><!-- End Pengguna Nav -->
+
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -223,18 +226,18 @@ if (isset($_POST['simpan'])) {
                                     <input type="number" class="form-control" id="stok" name="stok" placeholder="Masukkan Stok Produk" required>
                                 </div>
                                 <div class="col-12">
-                                    <label for="ket" class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" id="ket" name="ket" placeholder="Masukkan Deskripsi Produk" required></textarea>
+                                    <label for="desk" class="form-label">Deskripsi</label>
+                                    <textarea class="form-control" id="desk" name="desk" placeholder="Masukkan Deskripsi Produk" required></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <label for="id_ktg" class="form-label">Kategori</label>
-                                    <select class="form-control" id="id_ktg" name="id_ktg" required>
+                                    <label for="id_kategori" class="form-label">Kategori</label>
+                                    <select class="form-control" id="id_kategori" name="id_kategori" required>
                                         <option value="">-- Pilih Kategori --</option>
                                         <?php
                                         include "koneksi.php";
-                                        $query = mysqli_query($koneksi, "SELECT * FROM tb_ktg");
+                                        $query = mysqli_query($koneksi, "SELECT * FROM tb_kategori");
                                         while ($kategori = mysqli_fetch_array($query)) {
-                                            echo "<option value='{$kategori['id_ktg']}'>{$kategori['nm_ktg']}</option>";
+                                            echo "<option value='{$kategori['id_kategori']}'>{$kategori['nm_kategori']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -259,10 +262,10 @@ if (isset($_POST['simpan'])) {
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Echoes</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Chrome</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://instagram.com/dea.salsa.503/" target="_blank">Kukuh Putra</a>
+            Designed by <a href="https://instagram.com/tashagiri_ken" target="_blank">TauraGufranz</a>
         </div>
     </footer><!-- End Footer -->
 

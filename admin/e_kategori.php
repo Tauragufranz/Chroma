@@ -12,9 +12,9 @@ if (!$data) {
 }
 
 if (isset($_POST['simpan'])) {
-    $nm_ktg = $_POST['nm_ktg'];
+    $nm_kategori = $_POST['nm_ktg'];
 
-    $query = mysqli_query($koneksi, "UPDATE tb_ktg SET nm_ktg = '$nm_ktg' WHERE id_ktg = '$id'");
+    $query = mysqli_query($koneksi, "UPDATE tb_ktg SET nm_ktg = '$nm_kategori' WHERE id_ktg = '$id'");
 
     if ($query) {
         echo "<script>alert('Data berhasil diubah!'); window.location.href = 'kategori.php';</script>";
@@ -31,7 +31,7 @@ if (isset($_POST['simpan'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Echoes Admin</title>
+    <title>Kategori Produk - Chroma Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -72,7 +72,7 @@ if (isset($_POST['simpan'])) {
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Echoes</span>
+                <span class="d-none d-lg-block">Chroma</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -87,7 +87,7 @@ if (isset($_POST['simpan'])) {
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Kukuh Putra</h6>
+                            <h6>Tauragufranz</h6>
                             <span>Admin</span>
                         </li>
                         <li>
@@ -207,14 +207,14 @@ if (isset($_POST['simpan'])) {
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Echoes</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Chroma</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://www.instagram.com/ku_kuh11?igsh=OXo1MGNkdWI2YnB4" target="_blank">Kukuh Putra</a>
+            Designed by <a href="https://www.instagram.com/Tashagiri_ken" target="_blank">TauraGufranz</a>
         </div>
     </footer><!-- End Footer -->
 
